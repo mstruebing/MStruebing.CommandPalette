@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build": "neos-react-scripts build",
+    "watch": "neos-react-scripts watch"
+  },
+  "devDependencies": {
+    "@neos-project/neos-ui-extensibility": "~1.0.8"
+  },
+  "neos": {
+    "buildTargetDirectory": "../../Public/ColorPickerEditor"
+  },
+  "dependencies": {
+    "react-color": "^2.11.1"
+  }
+}
