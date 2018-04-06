@@ -2792,7 +2792,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var HelpDialog = (_dec = (0, _reactRedux.connect)(null, {
-    toggleFullScreen: _neosUiReduxStore.actions.UI.FullScreen.toggle
+    toggleFullScreen: _neosUiReduxStore.actions.UI.FullScreen.toggle,
+    toggleLeftSideBar: _neosUiReduxStore.actions.UI.LeftSideBar.toggle,
+    toggleRightSideBar: _neosUiReduxStore.actions.UI.RightSideBar.toggle
 }), _dec(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(HelpDialog, _PureComponent);
 
@@ -2809,22 +2811,64 @@ var HelpDialog = (_dec = (0, _reactRedux.connect)(null, {
                 title = _props.title,
                 isOpen = _props.isOpen,
                 onRequestClose = _props.onRequestClose,
-                toggleFullScreen = _props.toggleFullScreen;
+                toggleFullScreen = _props.toggleFullScreen,
+                toggleLeftSideBar = _props.toggleLeftSideBar,
+                toggleRightSideBar = _props.toggleRightSideBar;
 
 
-            var children = 'some children to render';
-            var actions = [_react2.default.createElement(
-                'button',
-                { onClick: toggleFullScreen },
-                'HALLO'
-            )];
+            var children = function children() {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'div',
+                        { 'class': 'helpText' },
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'This is some help'
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'If you have any questions regarding this software please contact the administrator:',
+                            _react2.default.createElement(
+                                'a',
+                                { href: 'mailto:admin@mycompany.com' },
+                                'admin@mycompany.com'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { 'class': 'actions' },
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: toggleFullScreen },
+                            'Toggle Fullscreen'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: toggleLeftSideBar },
+                            'Toggle LeftSideBar'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: toggleRightSideBar },
+                            'Toggle RightSideBar'
+                        )
+                    )
+                );
+            };
+
+            var actions = ['action1', 'action2'];
 
             return _react2.default.createElement(_reactUiComponents.Dialog, {
                 title: title,
                 isOpen: isOpen,
                 onRequestClose: onRequestClose,
                 actions: actions,
-                children: children
+                children: children()
             });
         }
     }]);
