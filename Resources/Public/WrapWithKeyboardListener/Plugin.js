@@ -986,6 +986,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
     var InsertModeModal = containerRegistry.get('Modals/InsertModeModal');
 
+    // only for demonstration of workingness
+
+    // const exampleFunc = () => console.log('Hello World');
+    // const wrapWithKeyboardListenerActionsAlreadyApplied = wrapWithKeyboardListener(exampleFunc);
+
     // you could pass a function or an array of functions
     // which gets executed in order when pressed the keyboard shortcut
     // elsewise a dialog will shown
@@ -1162,7 +1167,9 @@ var _reactKeydown = __webpack_require__(44);
 
 var _reactKeydown2 = _interopRequireDefault(_reactKeydown);
 
-var _reactUiComponents = __webpack_require__(76);
+var _HelpDialog = __webpack_require__(79);
+
+var _HelpDialog2 = _interopRequireDefault(_HelpDialog);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1250,6 +1257,13 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
                     });
                 }
             }, {
+                key: 'closeDialog',
+                value: function closeDialog() {
+                    this.setState({
+                        showDialog: false
+                    });
+                }
+            }, {
                 key: 'triggerActions',
                 value: function triggerActions(actions) {
                     actions.map(function (action) {
@@ -1269,28 +1283,14 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
             }, {
                 key: 'renderDialog',
                 value: function renderDialog() {
-                    var _this2 = this;
+                    var title = 'Quick Help Dialog';
+                    var isOpen = this.state.showDialog;
+                    var onRequestClose = this.closeDialog.bind(this);
 
-                    var showDialog = this.state.showDialog;
-
-                    if (!showDialog) {
-                        return null;
-                    }
-
-                    var children = 'some children to render';
-                    var actions = ['Foo 1', 'Foo 2'];
-
-                    var closeDialog = function closeDialog() {
-                        _this2.setState({
-                            showDialog: false
-                        });
-                    };
-
-                    return _react2.default.createElement(_reactUiComponents.Dialog, {
-                        isOpen: showDialog,
-                        actions: actions,
-                        children: children,
-                        onRequestClose: closeDialog
+                    return _react2.default.createElement(_HelpDialog2.default, {
+                        title: title,
+                        isOpen: isOpen,
+                        onRequestClose: onRequestClose
                     });
                 }
             }]);
@@ -2722,6 +2722,118 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().ReactUiComponents;
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(4);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(4);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class, _class2, _temp;
+
+var _react = __webpack_require__(23);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(43);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactUiComponents = __webpack_require__(76);
+
+var _reactRedux = __webpack_require__(77);
+
+var _neosUiReduxStore = __webpack_require__(78);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HelpDialog = (_dec = (0, _reactRedux.connect)(null, {
+    toggleFullScreen: _neosUiReduxStore.actions.UI.FullScreen.toggle
+}), _dec(_class = (_temp = _class2 = function (_PureComponent) {
+    _inherits(HelpDialog, _PureComponent);
+
+    function HelpDialog() {
+        _classCallCheck(this, HelpDialog);
+
+        return _possibleConstructorReturn(this, (HelpDialog.__proto__ || Object.getPrototypeOf(HelpDialog)).apply(this, arguments));
+    }
+
+    _createClass(HelpDialog, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                title = _props.title,
+                isOpen = _props.isOpen,
+                onRequestClose = _props.onRequestClose,
+                toggleFullScreen = _props.toggleFullScreen;
+
+
+            var children = 'some children to render';
+            var actions = [_react2.default.createElement(
+                'button',
+                { onClick: toggleFullScreen },
+                'HALLO'
+            )];
+
+            return _react2.default.createElement(_reactUiComponents.Dialog, {
+                title: title,
+                isOpen: isOpen,
+                onRequestClose: onRequestClose,
+                actions: actions,
+                children: children
+            });
+        }
+    }]);
+
+    return HelpDialog;
+}(_react.PureComponent), _class2.propTypes = {
+    toggleFullScreen: _propTypes2.default.func
+}, _temp)) || _class);
+exports.default = HelpDialog;
 
 /***/ })
 /******/ ]);

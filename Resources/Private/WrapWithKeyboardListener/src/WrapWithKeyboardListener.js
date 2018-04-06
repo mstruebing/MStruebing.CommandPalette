@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import keydown, { Keys } from 'react-keydown';
-import {Dialog} from '@neos-project/react-ui-components';
+import HelpDialog from './HelpDialog';
 
 const wrapWithKeyboardListener = actions => Container => {
     return class CustomKeyboardListener extends PureComponent {
@@ -33,6 +33,12 @@ const wrapWithKeyboardListener = actions => Container => {
             });
         }
 
+        closeDialog() {
+            this.setState({
+                showDialog: false
+            });
+        }
+
         triggerActions(actions) {
             actions.map(action => {
                 console.log( action );
@@ -49,27 +55,15 @@ const wrapWithKeyboardListener = actions => Container => {
         }
 
         renderDialog() {
-            const showDialog = this.state.showDialog;
+            const title = 'Quick Help Dialog'
+            const isOpen = this.state.showDialog;
+            const onRequestClose = this.closeDialog.bind(this)
 
-            if (!showDialog) {
-                return null;
-            }
-
-            const children = 'some children to render';
-            const actions = ['Foo 1', 'Foo 2'];
-
-            const closeDialog = () => {
-                this.setState({
-                    showDialog: false
-                });
-            }
-
-            return <Dialog
-                isOpen={showDialog}
-                actions={actions}
-                children={children}
-                onRequestClose={closeDialog}
-                />
+            return <HelpDialog
+                    title={title}
+                    isOpen={isOpen}
+                    onRequestClose={onRequestClose}
+                    />;
         }
     }
 };
