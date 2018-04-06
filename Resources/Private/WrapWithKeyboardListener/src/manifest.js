@@ -9,5 +9,13 @@ manifest('Neos.Neos.Ui.ExtensibilityExamples:WrapWithKeyboardListener', {}, glob
 
     const InsertModeModal = containerRegistry.get('Modals/InsertModeModal');
 
-    containerRegistry.set('App', wrapWithKeyboardListener([InsertModeModal])(App));
+    // you could pass a function or an array of functions
+    // which gets executed in order when pressed the keyboard shortcut
+    // elsewise a dialog will shown
+    const wrapWithKeyboardListenerActionsAlreadyApplied = wrapWithKeyboardListener();
+    const wrapWithKeyboardListenerElementToWrapAlreadyApplied = wrapWithKeyboardListenerActionsAlreadyApplied(App);
+    // same as
+    // wrapWithKeyboardListener()(App)
+
+    containerRegistry.set('App', wrapWithKeyboardListenerElementToWrapAlreadyApplied);
 });

@@ -119,55 +119,6 @@ exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProp
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(18)('wks');
-var uid = __webpack_require__(5);
-var Symbol = __webpack_require__(0).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(57);
-var defined = __webpack_require__(58);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -188,6 +139,55 @@ function readFromConsumerApi(key) {
         throw new Error('You are trying to read from a consumer api that hasn\'t been initialized yet!');
     };
 }
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(18)('wks');
+var uid = __webpack_require__(6);
+var Symbol = __webpack_require__(0).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(57);
+var defined = __webpack_require__(58);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+
 
 /***/ }),
 /* 9 */
@@ -503,7 +503,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(4);
+var isObject = __webpack_require__(5);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -529,7 +529,7 @@ module.exports = __webpack_require__(2) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(4);
+var isObject = __webpack_require__(5);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -563,7 +563,7 @@ module.exports = function (bitmap, value) {
 var global = __webpack_require__(0);
 var hide = __webpack_require__(14);
 var has = __webpack_require__(1);
-var SRC = __webpack_require__(5)('src');
+var SRC = __webpack_require__(6)('src');
 var TO_STRING = 'toString';
 var $toString = Function[TO_STRING];
 var TPL = ('' + $toString).split(TO_STRING);
@@ -653,7 +653,7 @@ exports.f = {}.propertyIsEnumerable;
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(8);
+var _readFromConsumerApi = __webpack_require__(4);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -723,7 +723,7 @@ module.exports = !__webpack_require__(2) && !__webpack_require__(11)(function ()
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(4);
+var isObject = __webpack_require__(5);
 var document = __webpack_require__(0).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -736,7 +736,7 @@ module.exports = function (it) {
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(6);
+exports.f = __webpack_require__(7);
 
 
 /***/ }),
@@ -751,7 +751,7 @@ module.exports = false;
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(1);
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(8);
 var arrayIndexOf = __webpack_require__(59)(false);
 var IE_PROTO = __webpack_require__(31)('IE_PROTO');
 
@@ -786,7 +786,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(18)('keys');
-var uid = __webpack_require__(5);
+var uid = __webpack_require__(6);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -986,7 +986,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
     var InsertModeModal = containerRegistry.get('Modals/InsertModeModal');
 
-    containerRegistry.set('App', (0, _WrapWithKeyboardListener2.default)([InsertModeModal])(App));
+    // you could pass a function or an array of functions
+    // which gets executed in order when pressed the keyboard shortcut
+    // elsewise a dialog will shown
+    var wrapWithKeyboardListenerActionsAlreadyApplied = (0, _WrapWithKeyboardListener2.default)();
+    var wrapWithKeyboardListenerElementToWrapAlreadyApplied = wrapWithKeyboardListenerActionsAlreadyApplied(App);
+    // same as
+    // wrapWithKeyboardListener()(App)
+
+    containerRegistry.set('App', wrapWithKeyboardListenerElementToWrapAlreadyApplied);
 });
 
 /***/ }),
@@ -1005,7 +1013,7 @@ var _createConsumerApi = __webpack_require__(39);
 
 var _createConsumerApi2 = _interopRequireDefault(_createConsumerApi);
 
-var _readFromConsumerApi = __webpack_require__(8);
+var _readFromConsumerApi = __webpack_require__(4);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -1140,8 +1148,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(23);
@@ -1155,6 +1161,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _reactKeydown = __webpack_require__(44);
 
 var _reactKeydown2 = _interopRequireDefault(_reactKeydown);
+
+var _reactUiComponents = __webpack_require__(76);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1201,9 +1209,19 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
             _inherits(CustomKeyboardListener, _PureComponent);
 
             function CustomKeyboardListener() {
+                var _ref;
+
+                var _temp, _this, _ret;
+
                 _classCallCheck(this, CustomKeyboardListener);
 
-                return _possibleConstructorReturn(this, (CustomKeyboardListener.__proto__ || Object.getPrototypeOf(CustomKeyboardListener)).apply(this, arguments));
+                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                    args[_key] = arguments[_key];
+                }
+
+                return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CustomKeyboardListener.__proto__ || Object.getPrototypeOf(CustomKeyboardListener)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+                    showDialog: false
+                }, _temp), _possibleConstructorReturn(_this, _ret);
             }
 
             _createClass(CustomKeyboardListener, [{
@@ -1211,13 +1229,25 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
                 value: function handleKeyPress(event) {
                     if (event.key === '/' && event.ctrlKey) {
                         if (Array.isArray(actions)) {
+                            // this could be some shortcut actions
                             this.triggerActions(actions);
                         } else if (typeof actions === 'function') {
+                            // this could be some shortcut actions
                             this.triggerActions([actions]);
                         } else {
-                            console.error('actions needs to be an array or function but is of type', typeof actions === 'undefined' ? 'undefined' : _typeof(actions));
+                            // this could be an overview
+                            // in form of a dialog in case
+                            // no shortcuts are defined
+                            this.toggleShowDialog();
                         }
                     }
+                }
+            }, {
+                key: 'toggleShowDialog',
+                value: function toggleShowDialog() {
+                    this.setState({
+                        showDialog: !this.state.showDialog
+                    });
                 }
             }, {
                 key: 'triggerActions',
@@ -1229,8 +1259,30 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
             }, {
                 key: 'render',
                 value: function render() {
+                    var _this2 = this;
+
                     var props = this.props;
-                    return _react2.default.createElement(Container, props);
+                    var showDialog = this.state.showDialog;
+                    var children = 'some children to render';
+                    var actions = ['Foo 1', 'Foo 2'];
+
+                    var closeDialog = function closeDialog() {
+                        _this2.setState({
+                            showDialog: false
+                        });
+                    };
+
+                    return _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement(_reactUiComponents.Dialog, {
+                            isOpen: showDialog,
+                            actions: actions,
+                            children: children,
+                            onRequestClose: closeDialog
+                        }),
+                        _react2.default.createElement(Container, props)
+                    );
                 }
             }]);
 
@@ -1248,7 +1300,7 @@ exports.default = wrapWithKeyboardListener;
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(8);
+var _readFromConsumerApi = __webpack_require__(4);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -1605,15 +1657,15 @@ var META = __webpack_require__(53).KEY;
 var $fails = __webpack_require__(11);
 var shared = __webpack_require__(18);
 var setToStringTag = __webpack_require__(54);
-var uid = __webpack_require__(5);
-var wks = __webpack_require__(6);
+var uid = __webpack_require__(6);
+var wks = __webpack_require__(7);
 var wksExt = __webpack_require__(27);
 var wksDefine = __webpack_require__(55);
 var enumKeys = __webpack_require__(56);
 var isArray = __webpack_require__(62);
 var anObject = __webpack_require__(13);
-var isObject = __webpack_require__(4);
-var toIObject = __webpack_require__(7);
+var isObject = __webpack_require__(5);
+var toIObject = __webpack_require__(8);
 var toPrimitive = __webpack_require__(15);
 var createDesc = __webpack_require__(16);
 var _create = __webpack_require__(63);
@@ -1919,8 +1971,8 @@ module.exports = function (it) {
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(5)('meta');
-var isObject = __webpack_require__(4);
+var META = __webpack_require__(6)('meta');
+var isObject = __webpack_require__(5);
 var has = __webpack_require__(1);
 var setDesc = __webpack_require__(3).f;
 var id = 0;
@@ -1980,7 +2032,7 @@ var meta = module.exports = {
 
 var def = __webpack_require__(3).f;
 var has = __webpack_require__(1);
-var TAG = __webpack_require__(6)('toStringTag');
+var TAG = __webpack_require__(7)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -2052,7 +2104,7 @@ module.exports = function (it) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(8);
 var toLength = __webpack_require__(60);
 var toAbsoluteIndex = __webpack_require__(61);
 module.exports = function (IS_INCLUDES) {
@@ -2190,7 +2242,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(8);
 var gOPN = __webpack_require__(33).f;
 var toString = {}.toString;
 
@@ -2216,7 +2268,7 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 var pIE = __webpack_require__(22);
 var createDesc = __webpack_require__(16);
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(8);
 var toPrimitive = __webpack_require__(15);
 var has = __webpack_require__(1);
 var IE8_DOM_DEFINE = __webpack_require__(25);
@@ -2241,7 +2293,7 @@ exports.f = __webpack_require__(2) ? gOPD : function getOwnPropertyDescriptor(O,
 // 19.1.3.6 Object.prototype.toString()
 var classof = __webpack_require__(69);
 var test = {};
-test[__webpack_require__(6)('toStringTag')] = 'z';
+test[__webpack_require__(7)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
   __webpack_require__(17)(Object.prototype, 'toString', function toString() {
     return '[object ' + classof(this) + ']';
@@ -2255,7 +2307,7 @@ if (test + '' != '[object z]') {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(20);
-var TAG = __webpack_require__(6)('toStringTag');
+var TAG = __webpack_require__(7)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -2389,7 +2441,7 @@ function sortByDOMPosition(a, b) {
 "use strict";
 
 
-var _readFromConsumerApi = __webpack_require__(8);
+var _readFromConsumerApi = __webpack_require__(4);
 
 var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
@@ -2646,6 +2698,21 @@ function methodWrapperScoped(_ref) {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (methodWrapperScoped);
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(4);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().ReactUiComponents;
 
 /***/ })
 /******/ ]);
