@@ -1259,10 +1259,24 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
             }, {
                 key: 'render',
                 value: function render() {
+                    return _react2.default.createElement(
+                        'div',
+                        null,
+                        this.renderDialog(),
+                        _react2.default.createElement(Container, this.props)
+                    );
+                }
+            }, {
+                key: 'renderDialog',
+                value: function renderDialog() {
                     var _this2 = this;
 
-                    var props = this.props;
                     var showDialog = this.state.showDialog;
+
+                    if (!showDialog) {
+                        return null;
+                    }
+
                     var children = 'some children to render';
                     var actions = ['Foo 1', 'Foo 2'];
 
@@ -1272,17 +1286,12 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
                         });
                     };
 
-                    return _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(_reactUiComponents.Dialog, {
-                            isOpen: showDialog,
-                            actions: actions,
-                            children: children,
-                            onRequestClose: closeDialog
-                        }),
-                        _react2.default.createElement(Container, props)
-                    );
+                    return _react2.default.createElement(_reactUiComponents.Dialog, {
+                        isOpen: showDialog,
+                        actions: actions,
+                        children: children,
+                        onRequestClose: closeDialog
+                    });
                 }
             }]);
 

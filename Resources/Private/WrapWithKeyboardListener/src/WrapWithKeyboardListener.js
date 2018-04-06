@@ -40,8 +40,21 @@ const wrapWithKeyboardListener = actions => Container => {
         }
 
         render() {
-            const props = this.props;
+            return (
+                <div>
+                    {this.renderDialog()}
+                    <Container {...this.props}/>
+                </div>
+            );
+        }
+
+        renderDialog() {
             const showDialog = this.state.showDialog;
+
+            if (!showDialog) {
+                return null;
+            }
+
             const children = 'some children to render';
             const actions = ['Foo 1', 'Foo 2'];
 
@@ -51,17 +64,12 @@ const wrapWithKeyboardListener = actions => Container => {
                 });
             }
 
-            return (
-                <div>
-                    <Dialog
-                        isOpen={showDialog}
-                        actions={actions}
-                        children={children}
-                        onRequestClose={closeDialog}
-                        />
-                    <Container {...props}/>
-                </div>
-            );
+            return <Dialog
+                isOpen={showDialog}
+                actions={actions}
+                children={children}
+                onRequestClose={closeDialog}
+                />
         }
     }
 };
