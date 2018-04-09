@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import keydown, { Keys } from 'react-keydown';
 import HelpDialog from './HelpDialog';
 
-const wrapWithKeyboardListener = actions => Container => {
+const wrapWithKeyboardListener = Container => {
     return class CustomKeyboardListener extends PureComponent {
         state = {
             showDialog: false
@@ -12,18 +12,7 @@ const wrapWithKeyboardListener = actions => Container => {
         @keydown( 'ctrl+/' )
         handleKeyPress(event) {
             if (event.key === '/'  && event.ctrlKey) {
-                if (Array.isArray(actions)) {
-                    // this could be some shortcut actions
-                    this.triggerActions(actions);
-                } else if (typeof actions === 'function')  {
-                    // this could be some shortcut actions
-                    this.triggerActions([actions]);
-                } else {
-                    // this could be an overview
-                    // in form of a dialog in case
-                    // no shortcuts are defined
-                    this.toggleShowDialog();
-                }
+                this.toggleShowDialog();
             }
         }
 
@@ -39,12 +28,6 @@ const wrapWithKeyboardListener = actions => Container => {
             });
         }
 
-        triggerActions(actions) {
-            actions.map(action => {
-                console.log( action );
-            });
-        }
-
         render() {
             return (
                 <React.Fragment>
@@ -55,15 +38,17 @@ const wrapWithKeyboardListener = actions => Container => {
         }
 
         renderDialog() {
-            const title = 'Quick Access Dialog'
+            const title = 'Command Palette'
             const isOpen = this.state.showDialog;
             const onRequestClose = this.closeDialog.bind(this)
 
-            return <HelpDialog
+            return (
+                <HelpDialog
                     title={title}
                     isOpen={isOpen}
                     onRequestClose={onRequestClose}
-                    />;
+                    />
+            );
         }
     }
 };

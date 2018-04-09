@@ -996,25 +996,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 (0, _neosUiExtensibility2.default)('Neos.Neos.Ui.ExtensibilityExamples:WrapWithKeyboardListener', {}, function (globalRegistry) {
     var containerRegistry = globalRegistry.get('containers');
-
     var App = containerRegistry.get('App');
 
-    var InsertModeModal = containerRegistry.get('Modals/InsertModeModal');
-
-    // only for demonstration of workingness
-
-    // const exampleFunc = () => console.log('Hello World');
-    // const wrapWithKeyboardListenerActionsAlreadyApplied = wrapWithKeyboardListener(exampleFunc);
-
-    // you could pass a function or an array of functions
-    // which gets executed in order when pressed the keyboard shortcut
-    // elsewise a dialog will shown
-    var wrapWithKeyboardListenerActionsAlreadyApplied = (0, _WrapWithKeyboardListener2.default)();
-    var wrapWithKeyboardListenerElementToWrapAlreadyApplied = wrapWithKeyboardListenerActionsAlreadyApplied(App);
-    // same as
-    // wrapWithKeyboardListener()(App)
-
-    containerRegistry.set('App', wrapWithKeyboardListenerElementToWrapAlreadyApplied);
+    containerRegistry.set('App', (0, _WrapWithKeyboardListener2.default)(App));
 });
 
 /***/ }),
@@ -1223,96 +1207,76 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
     return desc;
 }
 
-var wrapWithKeyboardListener = function wrapWithKeyboardListener(actions) {
-    return function (Container) {
-        var _dec, _desc, _value, _class;
+var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
+    var _dec, _desc, _value, _class;
 
-        return _dec = (0, _reactKeydown2.default)('ctrl+/'), (_class = function (_PureComponent) {
-            _inherits(CustomKeyboardListener, _PureComponent);
+    return _dec = (0, _reactKeydown2.default)('ctrl+/'), (_class = function (_PureComponent) {
+        _inherits(CustomKeyboardListener, _PureComponent);
 
-            function CustomKeyboardListener() {
-                var _ref;
+        function CustomKeyboardListener() {
+            var _ref;
 
-                var _temp, _this, _ret;
+            var _temp, _this, _ret;
 
-                _classCallCheck(this, CustomKeyboardListener);
+            _classCallCheck(this, CustomKeyboardListener);
 
-                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                    args[_key] = arguments[_key];
-                }
-
-                return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CustomKeyboardListener.__proto__ || Object.getPrototypeOf(CustomKeyboardListener)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-                    showDialog: false
-                }, _temp), _possibleConstructorReturn(_this, _ret);
+            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments[_key];
             }
 
-            _createClass(CustomKeyboardListener, [{
-                key: 'handleKeyPress',
-                value: function handleKeyPress(event) {
-                    if (event.key === '/' && event.ctrlKey) {
-                        if (Array.isArray(actions)) {
-                            // this could be some shortcut actions
-                            this.triggerActions(actions);
-                        } else if (typeof actions === 'function') {
-                            // this could be some shortcut actions
-                            this.triggerActions([actions]);
-                        } else {
-                            // this could be an overview
-                            // in form of a dialog in case
-                            // no shortcuts are defined
-                            this.toggleShowDialog();
-                        }
-                    }
-                }
-            }, {
-                key: 'toggleShowDialog',
-                value: function toggleShowDialog() {
-                    this.setState({
-                        showDialog: !this.state.showDialog
-                    });
-                }
-            }, {
-                key: 'closeDialog',
-                value: function closeDialog() {
-                    this.setState({
-                        showDialog: false
-                    });
-                }
-            }, {
-                key: 'triggerActions',
-                value: function triggerActions(actions) {
-                    actions.map(function (action) {
-                        console.log(action);
-                    });
-                }
-            }, {
-                key: 'render',
-                value: function render() {
-                    return _react2.default.createElement(
-                        _react2.default.Fragment,
-                        null,
-                        this.renderDialog(),
-                        _react2.default.createElement(Container, this.props)
-                    );
-                }
-            }, {
-                key: 'renderDialog',
-                value: function renderDialog() {
-                    var title = 'Quick Access Dialog';
-                    var isOpen = this.state.showDialog;
-                    var onRequestClose = this.closeDialog.bind(this);
+            return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CustomKeyboardListener.__proto__ || Object.getPrototypeOf(CustomKeyboardListener)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+                showDialog: false
+            }, _temp), _possibleConstructorReturn(_this, _ret);
+        }
 
-                    return _react2.default.createElement(_HelpDialog2.default, {
-                        title: title,
-                        isOpen: isOpen,
-                        onRequestClose: onRequestClose
-                    });
+        _createClass(CustomKeyboardListener, [{
+            key: 'handleKeyPress',
+            value: function handleKeyPress(event) {
+                if (event.key === '/' && event.ctrlKey) {
+                    this.toggleShowDialog();
                 }
-            }]);
+            }
+        }, {
+            key: 'toggleShowDialog',
+            value: function toggleShowDialog() {
+                this.setState({
+                    showDialog: !this.state.showDialog
+                });
+            }
+        }, {
+            key: 'closeDialog',
+            value: function closeDialog() {
+                this.setState({
+                    showDialog: false
+                });
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                return _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    this.renderDialog(),
+                    _react2.default.createElement(Container, this.props)
+                );
+            }
+        }, {
+            key: 'renderDialog',
+            value: function renderDialog() {
+                var title = 'Command Palette';
+                var isOpen = this.state.showDialog;
+                var onRequestClose = this.closeDialog.bind(this);
 
-            return CustomKeyboardListener;
-        }(_react.PureComponent), (_applyDecoratedDescriptor(_class.prototype, 'handleKeyPress', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleKeyPress'), _class.prototype)), _class);
-    };
+                return _react2.default.createElement(_HelpDialog2.default, {
+                    title: title,
+                    isOpen: isOpen,
+                    onRequestClose: onRequestClose
+                });
+            }
+        }]);
+
+        return CustomKeyboardListener;
+    }(_react.PureComponent), (_applyDecoratedDescriptor(_class.prototype, 'handleKeyPress', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleKeyPress'), _class.prototype)), _class);
 };
 
 exports.default = wrapWithKeyboardListener;

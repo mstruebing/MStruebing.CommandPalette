@@ -12,7 +12,7 @@ import styles from './styles.css';
     }), {
         toggleFullScreen: actions.UI.FullScreen.toggle,
         toggleLeftSideBar: actions.UI.LeftSideBar.toggle,
-        toggleRightSideBar: actions.UI.RightSideBar.toggle,
+        toggleRightSideBar: actions.UI.RightSideBar.toggle
     }
 )
 export default class HelpDialog extends PureComponent {
@@ -108,12 +108,13 @@ export default class HelpDialog extends PureComponent {
 
         const actions = [<Button style="lighter" onClick={onRequestClose}>Close</Button>];
 
-        return (<Dialog
-            title={title}
-            isOpen={isOpen}
-            onRequestClose={onRequestClose}
-            actions={actions}
-            children={children()}
-            />);
+        return (
+            <Dialog
+                title={title}
+                isOpen={isOpen}
+                onRequestClose={onRequestClose}
+                actions={actions}
+                children={children()}
+                />);
     }
 }
