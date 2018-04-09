@@ -55,7 +55,7 @@ const wrapWithKeyboardListener = actions => Container => {
         }
 
         renderDialog() {
-            const title = 'Quick Help Dialog'
+            const title = 'Quick Access Dialog'
             const isOpen = this.state.showDialog;
             const onRequestClose = this.closeDialog.bind(this)
 
