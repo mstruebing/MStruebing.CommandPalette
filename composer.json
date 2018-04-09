@@ -1,7 +1,7 @@
 {
     "description": "",
     "type": "neos-package",
-    "name": "neos/neos-ui-extensibilityexamples",
+    "name": "mstruebing/commandpalette",
     "require": {
         "neos/flow": "*"
     },
@@ -12,7 +12,7 @@
     },
     "extra": {
         "neos": {
-            "package-key": "Neos.Neos.Ui.ExtensibilityExamples"
+            "package-key": "MStruebing.CommandPalette"
         }
     }
 }

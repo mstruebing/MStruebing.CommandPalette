@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import keydown, { Keys } from 'react-keydown';
-import HelpDialog from './HelpDialog';
+import CommandPalette from './CommandPalette';
 
 const wrapWithKeyboardListener = Container => {
     return class CustomKeyboardListener extends PureComponent {
@@ -43,7 +43,7 @@ const wrapWithKeyboardListener = Container => {
             const onRequestClose = this.closeDialog.bind(this)
 
             return (
-                <HelpDialog
+                <CommandPalette
                     title={title}
                     isOpen={isOpen}
                     onRequestClose={onRequestClose}

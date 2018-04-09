@@ -15,7 +15,7 @@ import styles from './styles.css';
         toggleRightSideBar: actions.UI.RightSideBar.toggle
     }
 )
-export default class HelpDialog extends PureComponent {
+export default class CommandPalette extends PureComponent {
     static propTypes = {
         toggleFullScreen: PropTypes.func,
         toggleLeftSideBar: PropTypes.func,

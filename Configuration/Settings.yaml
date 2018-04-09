@@ -3,5 +3,5 @@ Neos:
     Ui:
       resources:
         javascript:
-          'Neos.Neos.Ui.ExtensibilityExamples:WrapWithKeyboardListener':
-            resource: resource://Neos.Neos.Ui.ExtensibilityExamples/Public/WrapWithKeyboardListener/Plugin.js
+          'MStruebing.CommandPalette:CommandPalette':
+            resource: resource://MStruebing.CommandPalette/Public/CommandPalette/Plugin.js
