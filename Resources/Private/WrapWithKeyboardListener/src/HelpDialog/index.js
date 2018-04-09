@@ -84,7 +84,7 @@ export default class HelpDialog extends PureComponent {
             onRequestClose,
         } = this.props;
 
-        const myButton = (action, label, key) => <Button style="lighter" onClick={action} key={key}>{label}</Button>;
+        const myButton = (action, label, key) => <Button style={key === 0 ? "brand" : "lighter"} onClick={action} key={key}>{label}</Button>;
 
         const children = () => {
             const placeholder = 'What do you want to do?'

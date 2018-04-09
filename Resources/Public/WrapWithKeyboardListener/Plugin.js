@@ -2845,7 +2845,7 @@ var HelpDialog = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
             var myButton = function myButton(action, label, key) {
                 return _react2.default.createElement(
                     _reactUiComponents.Button,
-                    { style: 'lighter', onClick: action, key: key },
+                    { style: key === 0 ? "brand" : "lighter", onClick: action, key: key },
                     label
                 );
             };
