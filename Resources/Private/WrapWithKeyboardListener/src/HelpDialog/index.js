@@ -21,6 +21,7 @@ export default class HelpDialog extends PureComponent {
         toggleLeftSideBar: PropTypes.func,
         toggleRightSideBar: PropTypes.func,
         previewUrl: PropTypes.string,
+        searchTerm: PropTypes.string
     };
 
     state = {
@@ -55,7 +56,7 @@ export default class HelpDialog extends PureComponent {
         };
     }
 
-    onUpdateSearchTerm(searchTerm) {
+    onUpdateSearchTerm(searchTerm = '') {
         this.setState({
             searchTerm
         });
@@ -64,6 +65,12 @@ export default class HelpDialog extends PureComponent {
     onPressEnterKey() {
         const [head, ..._] = this.getFilteredShortcuts();
         head && head.action && head.action();
+        this.reset();
+    }
+
+    reset() {
+        this.onUpdateSearchTerm();
+        this.props.onRequestClose();
     }
 
     getFilteredShortcuts() {

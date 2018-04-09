@@ -2798,7 +2798,9 @@ var HelpDialog = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
 
     _createClass(HelpDialog, [{
         key: 'onUpdateSearchTerm',
-        value: function onUpdateSearchTerm(searchTerm) {
+        value: function onUpdateSearchTerm() {
+            var searchTerm = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
             this.setState({
                 searchTerm: searchTerm
             });
@@ -2812,6 +2814,13 @@ var HelpDialog = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
                 _ = _getFilteredShortcuts2.slice(1);
 
             head && head.action && head.action();
+            this.reset();
+        }
+    }, {
+        key: 'reset',
+        value: function reset() {
+            this.onUpdateSearchTerm();
+            this.props.onRequestClose();
         }
     }, {
         key: 'getFilteredShortcuts',
@@ -2888,7 +2897,8 @@ var HelpDialog = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
     toggleFullScreen: _propTypes2.default.func,
     toggleLeftSideBar: _propTypes2.default.func,
     toggleRightSideBar: _propTypes2.default.func,
-    previewUrl: _propTypes2.default.string
+    previewUrl: _propTypes2.default.string,
+    searchTerm: _propTypes2.default.string
 }, _temp)) || _class);
 exports.default = HelpDialog;
 
@@ -2977,7 +2987,7 @@ exports = module.exports = __webpack_require__(82)(false);
 
 
 // module
-exports.push([module.i, ".styles__dialog___1xkBT {\n    padding: 16px;\n}\n\n.styles__actions___2NKSG > * {\n    border-right: 1px solid black !important;\n    margin: .5em !important;\n}\n", ""]);
+exports.push([module.i, ".styles__dialog___1xkBT {\n    padding: 16px;\n}\n\n.styles__actions___2NKSG > * {\n    display: block !important;\n    margin: .5em auto !important;\n}\n", ""]);
 
 // exports
 exports.locals = {

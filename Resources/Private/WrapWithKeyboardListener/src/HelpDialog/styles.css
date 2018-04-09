@@ -3,6 +3,6 @@
 }
 
 .actions > * {
-    border-right: 1px solid black !important;
-    margin: .5em !important;
+    display: block !important;
+    margin: .5em auto !important;
 }
