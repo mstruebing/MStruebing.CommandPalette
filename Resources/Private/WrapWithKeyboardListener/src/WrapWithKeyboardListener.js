@@ -47,10 +47,10 @@ const wrapWithKeyboardListener = actions => Container => {
 
         render() {
             return (
-                <div>
+                <React.Fragment>
                     {this.renderDialog()}
                     <Container {...this.props}/>
-                </div>
+                </React.Fragment>
             );
         }
 

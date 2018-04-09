@@ -27,14 +27,14 @@ export default class HelpDialog extends PureComponent {
         const children = () => {
             return (
                 <div>
-                    <div class="helpText">
+                    <div className="helpText">
                         <p>This is some help</p>
                         <p>If you have any questions regarding this
                             software please contact the administrator:
                             <a href="mailto:admin@mycompany.com">admin@mycompany.com</a>
                         </p>
                     </div>
-                    <div class="actions">
+                    <div className="actions">
                         <button onClick={toggleFullScreen}>Toggle Fullscreen</button>
                         <button onClick={toggleLeftSideBar}>Toggle LeftSideBar</button>
                         <button onClick={toggleRightSideBar}>Toggle RightSideBar</button>
