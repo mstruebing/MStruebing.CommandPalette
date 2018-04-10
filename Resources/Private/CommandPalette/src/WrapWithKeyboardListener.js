@@ -6,7 +6,7 @@ import CommandPalette from './CommandPalette';
 const wrapWithKeyboardListener = Container => {
     return class CustomKeyboardListener extends PureComponent {
         state = {
-            showDialog: false
+            showDialog: false // rename
         };
 
         @keydown( 'ctrl+/' )
@@ -37,6 +37,7 @@ const wrapWithKeyboardListener = Container => {
             );
         }
 
+        // rename
         renderDialog() {
             const title = 'Command Palette'
             const isOpen = this.state.showDialog;

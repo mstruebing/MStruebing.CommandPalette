@@ -28,41 +28,41 @@ export default class CommandPalette extends PureComponent {
         searchTerm: ''
     };
 
+    shortcuts = [
+        {
+            label: "Toggle FullScreen",
+            action: this.props.toggleFullScreen
+        },
+        {
+            label: "Toggle LeftSideBar",
+            action: this.props.toggleLeftSideBar
+        },
+        {
+            label: "Toggle RightSideBar",
+            action: this.props.toggleRightSideBar
+        },
+        {
+            label: "Open Preview",
+            action: () => window.open(this.props.previewUrl, "blank")
+        }
+    ]
+
     constructor(props) {
         super(props);
-        this.handleUpdateSearchTerm = this.onUpdateSearchTerm.bind(this);
         this.handlePressEnterKey = this.onPressEnterKey.bind(this);
 
         this.state = {
-            searchTerm: '',
-            shortcuts: [
-                {
-                    label: "Toggle FullScreen",
-                    action: this.props.toggleFullScreen
-                },
-                {
-                    label: "Toggle LeftSideBar",
-                    action: this.props.toggleLeftSideBar
-                },
-                {
-                    label: "Toggle RightSideBar",
-                    action: this.props.toggleRightSideBar
-                },
-                {
-                    label: "Open Preview",
-                    action: () => window.open(this.props.previewUrl, "blank")
-                }
-            ]
+            searchTerm: ''
         };
     }
 
-    onUpdateSearchTerm(searchTerm = '') {
+    onUpdateSearchTerm = (searchTerm = '') => {
         this.setState({
             searchTerm
         });
     }
 
-    onPressEnterKey() {
+    onPressEnterKey = () => {
         const [head, ..._] = this.getFilteredShortcuts();
         head && head.action && head.action();
         this.reset();
@@ -74,7 +74,7 @@ export default class CommandPalette extends PureComponent {
     }
 
     getFilteredShortcuts() {
-        return this.state.shortcuts.filter(shortcut => shortcut.label.toLowerCase().includes(this.state.searchTerm.toLowerCase()));
+        return this.shortcuts.filter(shortcut => shortcut.label.toLowerCase().includes(this.state.searchTerm.toLowerCase()));
     }
 
     render() {
@@ -93,8 +93,8 @@ export default class CommandPalette extends PureComponent {
                 <div className={styles.dialog}>
                     <div className={styles.searchBar}>
                         <TextInput
-                            onEnterKey={this.handlePressEnterKey}
-                            onChange={this.handleUpdateSearchTerm}
+                            onEnterKey={this.onPressEnterKey}
+                            onChange={this.onUpdateSearchTerm}
                             placeholder={placeholder}
                             setFocus={true}
                             />

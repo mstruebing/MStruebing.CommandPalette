@@ -1225,7 +1225,7 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
             }
 
             return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CustomKeyboardListener.__proto__ || Object.getPrototypeOf(CustomKeyboardListener)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-                showDialog: false
+                showDialog: false // rename
             }, _temp), _possibleConstructorReturn(_this, _ret);
         }
 
@@ -1260,6 +1260,9 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
                     _react2.default.createElement(Container, this.props)
                 );
             }
+
+            // rename
+
         }, {
             key: 'renderDialog',
             value: function renderDialog() {
@@ -2735,52 +2738,49 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
         _this.state = {
             searchTerm: ''
         };
+        _this.shortcuts = [{
+            label: "Toggle FullScreen",
+            action: _this.props.toggleFullScreen
+        }, {
+            label: "Toggle LeftSideBar",
+            action: _this.props.toggleLeftSideBar
+        }, {
+            label: "Toggle RightSideBar",
+            action: _this.props.toggleRightSideBar
+        }, {
+            label: "Open Preview",
+            action: function action() {
+                return window.open(_this.props.previewUrl, "blank");
+            }
+        }];
 
-        _this.handleUpdateSearchTerm = _this.onUpdateSearchTerm.bind(_this);
+        _this.onUpdateSearchTerm = function () {
+            var searchTerm = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+            _this.setState({
+                searchTerm: searchTerm
+            });
+        };
+
+        _this.onPressEnterKey = function () {
+            var _this$getFilteredShor = _this.getFilteredShortcuts(),
+                _this$getFilteredShor2 = _toArray(_this$getFilteredShor),
+                head = _this$getFilteredShor2[0],
+                _ = _this$getFilteredShor2.slice(1);
+
+            head && head.action && head.action();
+            _this.reset();
+        };
+
         _this.handlePressEnterKey = _this.onPressEnterKey.bind(_this);
 
         _this.state = {
-            searchTerm: '',
-            shortcuts: [{
-                label: "Toggle FullScreen",
-                action: _this.props.toggleFullScreen
-            }, {
-                label: "Toggle LeftSideBar",
-                action: _this.props.toggleLeftSideBar
-            }, {
-                label: "Toggle RightSideBar",
-                action: _this.props.toggleRightSideBar
-            }, {
-                label: "Open Preview",
-                action: function action() {
-                    return window.open(_this.props.previewUrl, "blank");
-                }
-            }]
+            searchTerm: ''
         };
         return _this;
     }
 
     _createClass(CommandPalette, [{
-        key: 'onUpdateSearchTerm',
-        value: function onUpdateSearchTerm() {
-            var searchTerm = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-            this.setState({
-                searchTerm: searchTerm
-            });
-        }
-    }, {
-        key: 'onPressEnterKey',
-        value: function onPressEnterKey() {
-            var _getFilteredShortcuts = this.getFilteredShortcuts(),
-                _getFilteredShortcuts2 = _toArray(_getFilteredShortcuts),
-                head = _getFilteredShortcuts2[0],
-                _ = _getFilteredShortcuts2.slice(1);
-
-            head && head.action && head.action();
-            this.reset();
-        }
-    }, {
         key: 'reset',
         value: function reset() {
             this.onUpdateSearchTerm();
@@ -2791,7 +2791,7 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
         value: function getFilteredShortcuts() {
             var _this2 = this;
 
-            return this.state.shortcuts.filter(function (shortcut) {
+            return this.shortcuts.filter(function (shortcut) {
                 return shortcut.label.toLowerCase().includes(_this2.state.searchTerm.toLowerCase());
             });
         }
@@ -2824,8 +2824,8 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
                         'div',
                         { className: _styles2.default.searchBar },
                         _react2.default.createElement(_reactUiComponents.TextInput, {
-                            onEnterKey: _this3.handlePressEnterKey,
-                            onChange: _this3.handleUpdateSearchTerm,
+                            onEnterKey: _this3.onPressEnterKey,
+                            onChange: _this3.onUpdateSearchTerm,
                             placeholder: placeholder,
                             setFocus: true
                         })
