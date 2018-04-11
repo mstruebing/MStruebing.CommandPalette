@@ -1180,8 +1180,6 @@ var _styles2 = _interopRequireDefault(_styles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1245,17 +1243,11 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
                     isOpen: false
                 });
             }, _this.renderPalette = function () {
-                var _mergeClassNames;
-
-                var isOpen = _this.state.isOpen;
-
-                var finalClassName = (0, _classnames2.default)((_mergeClassNames = {}, _defineProperty(_mergeClassNames, _styles2.default.palette, true), _defineProperty(_mergeClassNames, _styles2.default.inactive, !isOpen), _mergeClassNames));
-
-                return _react2.default.createElement(
+                return _this.state.isOpen ? _react2.default.createElement(
                     'div',
-                    { className: finalClassName },
+                    { className: _styles2.default.palette },
                     _react2.default.createElement(_CommandPalette2.default, { close: _this.close })
-                );
+                ) : null;
             }, _temp), _possibleConstructorReturn(_this, _ret);
         }
 
@@ -2753,22 +2745,18 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
         };
         _this.shortcuts = [{
             label: "Toggle FullScreen",
-            action: _this.props.toggleFullScreen,
-            icon: 'arrow-right'
+            action: _this.props.toggleFullScreen
         }, {
             label: "Toggle LeftSideBar",
-            action: _this.props.toggleLeftSideBar,
-            icon: 'arrow-right'
+            action: _this.props.toggleLeftSideBar
         }, {
             label: "Toggle RightSideBar",
-            action: _this.props.toggleRightSideBar,
-            icon: 'arrow-right'
+            action: _this.props.toggleRightSideBar
         }, {
             label: "Open Preview",
             action: function action() {
                 return window.open(_this.props.previewUrl, "blank");
-            },
-            icon: 'arrow-right'
+            }
         }];
 
         _this.onUpdateSearchTerm = function () {
@@ -2806,7 +2794,7 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
                 return {
                     label: shortcut.label,
                     value: shortcut.action,
-                    icon: shortcut.icon
+                    icon: shortcut.icon ? shortcut.icon : 'arrow-right'
                 };
             });
 
@@ -2945,12 +2933,11 @@ exports = module.exports = __webpack_require__(84)(false);
 
 
 // module
-exports.push([module.i, ".styles__palette___2HEVH {\n    height: 100% !important;\n    z-index: 1000 !important;\n    position: fixed !important;\n    width: 100% !important;\n}\n\n.styles__inactive___3rFqu {\n    display: none !important;\n    z-index: 0 !important;\n}\n", ""]);
+exports.push([module.i, ".styles__palette___2HEVH {\n    height: 100% !important;\n    z-index: 1000 !important;\n    position: fixed !important;\n    width: 100% !important;\n    top: 96px;\n    padding: 0 350px;\n}\n", ""]);
 
 // exports
 exports.locals = {
-	"palette": "styles__palette___2HEVH",
-	"inactive": "styles__inactive___3rFqu"
+	"palette": "styles__palette___2HEVH"
 };
 
 /***/ }),

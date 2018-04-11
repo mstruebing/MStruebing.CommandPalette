@@ -31,23 +31,19 @@ export default class CommandPalette extends PureComponent {
     shortcuts = [
         {
             label: "Toggle FullScreen",
-            action: this.props.toggleFullScreen,
-            icon: 'arrow-right'
+            action: this.props.toggleFullScreen
         },
         {
             label: "Toggle LeftSideBar",
-            action: this.props.toggleLeftSideBar,
-            icon: 'arrow-right'
+            action: this.props.toggleLeftSideBar
         },
         {
             label: "Toggle RightSideBar",
-            action: this.props.toggleRightSideBar,
-            icon: 'arrow-right'
+            action: this.props.toggleRightSideBar
         },
         {
             label: "Open Preview",
-            action: () => window.open(this.props.previewUrl, "blank"),
-            icon: 'arrow-right'
+            action: () => window.open(this.props.previewUrl, "blank")
         }
     ]
 
@@ -83,7 +79,7 @@ export default class CommandPalette extends PureComponent {
         const shortcuts = this.shortcuts.map(shortcut => ({
             label: shortcut.label,
             value: shortcut.action,
-            icon: shortcut.icon
+            icon:  shortcut.icon ? shortcut.icon : 'arrow-right'
         }));
 
         // not exposed internally :(

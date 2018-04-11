@@ -44,20 +44,13 @@ const wrapWithKeyboardListener = Container => {
             );
         }
 
-        renderPalette = () => {
-            const isOpen = this.state.isOpen;
-
-            const finalClassName = mergeClassNames({
-                [styles.palette]: true,
-                [styles.inactive]: !isOpen
-            });
-
-            return (
-                <div className={finalClassName}>
+        renderPalette = () => this.state.isOpen ? (
+                <div className={styles.palette}>
                     <CommandPalette close={this.close}/>
                 </div>
+            ) : (
+                null
             );
-        }
     }
 };
 

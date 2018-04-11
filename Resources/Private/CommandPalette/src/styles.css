@@ -3,9 +3,6 @@
     z-index: 1000 !important;
     position: fixed !important;
     width: 100% !important;
-}
-
-.inactive {
-    display: none !important;
-    z-index: 0 !important;
+    top: 96px;
+    padding: 0 350px;
 }
