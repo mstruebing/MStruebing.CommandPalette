@@ -18,7 +18,6 @@ const wrapWithKeyboardListener = Container => {
                 this.toggle();
             }
 
-            console.log( event.key );
             if (event.key === 'Escape') {
                 this.close();
             }

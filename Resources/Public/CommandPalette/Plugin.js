@@ -1266,7 +1266,6 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
                     this.toggle();
                 }
 
-                console.log(event.key);
                 if (event.key === 'Escape') {
                     this.close();
                 }
@@ -2946,7 +2945,7 @@ exports = module.exports = __webpack_require__(84)(false);
 
 
 // module
-exports.push([module.i, ".styles__palette___2HEVH {\n    height: 100% !important;\n    z-index: 1000 !important;\n    position: fixed;\n    width: 100%;\n}\n\n.styles__inactive___3rFqu {\n    display: none;\n}\n", ""]);
+exports.push([module.i, ".styles__palette___2HEVH {\n    height: 100% !important;\n    z-index: 1000 !important;\n    position: fixed !important;\n    width: 100% !important;\n}\n\n.styles__inactive___3rFqu {\n    display: none !important;\n    z-index: 0 !important;\n}\n", ""]);
 
 // exports
 exports.locals = {
