@@ -1,54 +1,58 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import keydown, { Keys } from 'react-keydown';
+import mergeClassNames from 'classnames';
+
 import CommandPalette from './CommandPalette';
+import styles from './styles.css';
 
 const wrapWithKeyboardListener = Container => {
     return class CustomKeyboardListener extends PureComponent {
         state = {
-            showDialog: false // rename
+            isOpen: false
         };
 
         @keydown( 'ctrl+/' )
         handleKeyPress(event) {
+            console.log( 'WHA' );
             if (event.key === '/'  && event.ctrlKey) {
-                this.toggleShowDialog();
+                this.toggle();
             }
         }
 
-        toggleShowDialog() {
+        toggle = () => {
             this.setState({
-                showDialog: !this.state.showDialog
+                isOpen: !this.state.isOpen
             });
         }
 
-        closeDialog() {
+        close = () => {
             this.setState({
-                showDialog: false
+                isOpen: false
             });
         }
 
         render() {
             return (
                 <React.Fragment>
-                    {this.renderDialog()}
+                    {this.renderPalette()}
                     <Container {...this.props}/>
                 </React.Fragment>
             );
         }
 
-        // rename
-        renderDialog() {
-            const title = 'Command Palette'
-            const isOpen = this.state.showDialog;
-            const onRequestClose = this.closeDialog.bind(this)
+        renderPalette = () => {
+            const isOpen = this.state.isOpen;
+
+            const finalClassName = mergeClassNames({
+                [styles.palette]: true,
+                [styles.inactive]: !isOpen
+            });
 
             return (
-                <CommandPalette
-                    title={title}
-                    isOpen={isOpen}
-                    onRequestClose={onRequestClose}
-                    />
+                <div className={finalClassName}>
+                    <CommandPalette close={this.close}/>
+                </div>
             );
         }
     }

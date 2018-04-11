@@ -1,10 +1,9 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {Dialog, Button, TextInput} from '@neos-project/react-ui-components';
+import {SelectBox} from '@neos-project/react-ui-components';
 import {connect} from 'react-redux';
 import {actions} from '@neos-project/neos-ui-redux-store';
 import {$transform, $get} from 'plow-js';
-import styles from './styles.css';
 
 @connect(
     $transform({
@@ -21,7 +20,8 @@ export default class CommandPalette extends PureComponent {
         toggleLeftSideBar: PropTypes.func,
         toggleRightSideBar: PropTypes.func,
         previewUrl: PropTypes.string,
-        searchTerm: PropTypes.string
+        searchTerm: PropTypes.string,
+        close: PropTypes.func.isRequired
     };
 
     state = {
@@ -31,25 +31,28 @@ export default class CommandPalette extends PureComponent {
     shortcuts = [
         {
             label: "Toggle FullScreen",
-            action: this.props.toggleFullScreen
+            action: this.props.toggleFullScreen,
+            icon: 'arrow-right'
         },
         {
             label: "Toggle LeftSideBar",
-            action: this.props.toggleLeftSideBar
+            action: this.props.toggleLeftSideBar,
+            icon: 'arrow-right'
         },
         {
             label: "Toggle RightSideBar",
-            action: this.props.toggleRightSideBar
+            action: this.props.toggleRightSideBar,
+            icon: 'arrow-right'
         },
         {
             label: "Open Preview",
-            action: () => window.open(this.props.previewUrl, "blank")
+            action: () => window.open(this.props.previewUrl, "blank"),
+            icon: 'arrow-right'
         }
     ]
 
     constructor(props) {
         super(props);
-        this.handlePressEnterKey = this.onPressEnterKey.bind(this);
 
         this.state = {
             searchTerm: ''
@@ -62,59 +65,44 @@ export default class CommandPalette extends PureComponent {
         });
     }
 
-    onPressEnterKey = () => {
-        const [head, ..._] = this.getFilteredShortcuts();
-        head && head.action && head.action();
+    onValueChange = value => {
+        if (typeof(value) !== 'function') {
+            console.error('The value isnt a function!');
+        }
+
+        value();
         this.reset();
     }
 
-    reset() {
+    reset = () => {
+        this.props.close();
         this.onUpdateSearchTerm();
-        this.props.onRequestClose();
-    }
-
-    getFilteredShortcuts() {
-        return this.shortcuts.filter(shortcut => shortcut.label.toLowerCase().includes(this.state.searchTerm.toLowerCase()));
     }
 
     render() {
-        const {
-            title,
-            isOpen,
-            onRequestClose,
-        } = this.props;
+        const shortcuts = this.shortcuts.map(shortcut => ({
+            label: shortcut.label,
+            value: shortcut.action,
+            icon: shortcut.icon
+        }));
 
-        const myButton = (action, label, key) => <Button style={key === 0 ? "brand" : "lighter"} onClick={action} key={key}>{label}</Button>;
-
-        const children = () => {
-            const placeholder = 'What do you want to do?'
-
-            return (
-                <div className={styles.dialog}>
-                    <div className={styles.searchBar}>
-                        <TextInput
-                            onEnterKey={this.onPressEnterKey}
-                            onChange={this.onUpdateSearchTerm}
-                            placeholder={placeholder}
-                            setFocus={true}
-                            />
-                    </div>
-                    <div className={styles.actions}>
-                        {this.getFilteredShortcuts().map((shortcut, index) => myButton(shortcut.action, shortcut.label, index, shortcut.customAction))}
-                    </div>
-                </div>
-            );
-        };
-
-        const actions = [<Button style="lighter" onClick={onRequestClose}>Close</Button>];
+        // not exposed internally :(
+        const searchOptions = (searchTerm, processedSelectBoxOptions) =>
+            processedSelectBoxOptions.filter(option => option.label && option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
 
         return (
-            <Dialog
-                title={title}
-                isOpen={isOpen}
-                onRequestClose={onRequestClose}
-                actions={actions}
-                children={children()}
+            <SelectBox
+                placeholder={'What do you want to do?'}
+                placeholderIcon={'filter'}
+                onValueChange={this.onValueChange}
+                allowEmpty={true}
+                value={null}
+                options={searchOptions(this.state.searchTerm, shortcuts)}
+                displaySearchBox={true}
+                searchTerm={this.state.searchTerm}
+                onSearchTermChange={this.onUpdateSearchTerm}
+                threshold={0}
+                noMatchesFoundLabel={"No Command found"}
                 />);
     }
 }

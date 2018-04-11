@@ -1166,11 +1166,21 @@ var _reactKeydown = __webpack_require__(44);
 
 var _reactKeydown2 = _interopRequireDefault(_reactKeydown);
 
-var _CommandPalette = __webpack_require__(76);
+var _classnames = __webpack_require__(76);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _CommandPalette = __webpack_require__(77);
 
 var _CommandPalette2 = _interopRequireDefault(_CommandPalette);
 
+var _styles = __webpack_require__(82);
+
+var _styles2 = _interopRequireDefault(_styles);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1225,30 +1235,37 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
             }
 
             return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CustomKeyboardListener.__proto__ || Object.getPrototypeOf(CustomKeyboardListener)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-                showDialog: false // rename
+                isOpen: false
+            }, _this.toggle = function () {
+                _this.setState({
+                    isOpen: !_this.state.isOpen
+                });
+            }, _this.close = function () {
+                _this.setState({
+                    isOpen: false
+                });
+            }, _this.renderPalette = function () {
+                var _mergeClassNames;
+
+                var isOpen = _this.state.isOpen;
+
+                var finalClassName = (0, _classnames2.default)((_mergeClassNames = {}, _defineProperty(_mergeClassNames, _styles2.default.palette, true), _defineProperty(_mergeClassNames, _styles2.default.inactive, !isOpen), _mergeClassNames));
+
+                return _react2.default.createElement(
+                    'div',
+                    { className: finalClassName },
+                    _react2.default.createElement(_CommandPalette2.default, { close: _this.close })
+                );
             }, _temp), _possibleConstructorReturn(_this, _ret);
         }
 
         _createClass(CustomKeyboardListener, [{
             key: 'handleKeyPress',
             value: function handleKeyPress(event) {
+                console.log('WHA');
                 if (event.key === '/' && event.ctrlKey) {
-                    this.toggleShowDialog();
+                    this.toggle();
                 }
-            }
-        }, {
-            key: 'toggleShowDialog',
-            value: function toggleShowDialog() {
-                this.setState({
-                    showDialog: !this.state.showDialog
-                });
-            }
-        }, {
-            key: 'closeDialog',
-            value: function closeDialog() {
-                this.setState({
-                    showDialog: false
-                });
             }
         }, {
             key: 'render',
@@ -1256,25 +1273,9 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
                 return _react2.default.createElement(
                     _react2.default.Fragment,
                     null,
-                    this.renderDialog(),
+                    this.renderPalette(),
                     _react2.default.createElement(Container, this.props)
                 );
-            }
-
-            // rename
-
-        }, {
-            key: 'renderDialog',
-            value: function renderDialog() {
-                var title = 'Command Palette';
-                var isOpen = this.state.showDialog;
-                var onRequestClose = this.closeDialog.bind(this);
-
-                return _react2.default.createElement(_CommandPalette2.default, {
-                    title: title,
-                    isOpen: isOpen,
-                    onRequestClose: onRequestClose
-                });
             }
         }]);
 
@@ -2682,6 +2683,21 @@ function methodWrapperScoped(_ref) {
 "use strict";
 
 
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().classnames;
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -2699,21 +2715,15 @@ var _propTypes = __webpack_require__(24);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactUiComponents = __webpack_require__(77);
+var _reactUiComponents = __webpack_require__(78);
 
-var _reactRedux = __webpack_require__(78);
+var _reactRedux = __webpack_require__(79);
 
-var _neosUiReduxStore = __webpack_require__(79);
+var _neosUiReduxStore = __webpack_require__(80);
 
-var _plowJs = __webpack_require__(80);
-
-var _styles = __webpack_require__(81);
-
-var _styles2 = _interopRequireDefault(_styles);
+var _plowJs = __webpack_require__(81);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2740,18 +2750,22 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
         };
         _this.shortcuts = [{
             label: "Toggle FullScreen",
-            action: _this.props.toggleFullScreen
+            action: _this.props.toggleFullScreen,
+            icon: 'arrow-right'
         }, {
             label: "Toggle LeftSideBar",
-            action: _this.props.toggleLeftSideBar
+            action: _this.props.toggleLeftSideBar,
+            icon: 'arrow-right'
         }, {
             label: "Toggle RightSideBar",
-            action: _this.props.toggleRightSideBar
+            action: _this.props.toggleRightSideBar,
+            icon: 'arrow-right'
         }, {
             label: "Open Preview",
             action: function action() {
                 return window.open(_this.props.previewUrl, "blank");
-            }
+            },
+            icon: 'arrow-right'
         }];
 
         _this.onUpdateSearchTerm = function () {
@@ -2762,17 +2776,19 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
             });
         };
 
-        _this.onPressEnterKey = function () {
-            var _this$getFilteredShor = _this.getFilteredShortcuts(),
-                _this$getFilteredShor2 = _toArray(_this$getFilteredShor),
-                head = _this$getFilteredShor2[0],
-                _ = _this$getFilteredShor2.slice(1);
+        _this.onValueChange = function (value) {
+            if (typeof value !== 'function') {
+                console.error('The value isnt a function!');
+            }
 
-            head && head.action && head.action();
+            value();
             _this.reset();
         };
 
-        _this.handlePressEnterKey = _this.onPressEnterKey.bind(_this);
+        _this.reset = function () {
+            _this.props.close();
+            _this.onUpdateSearchTerm();
+        };
 
         _this.state = {
             searchTerm: ''
@@ -2781,77 +2797,35 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
     }
 
     _createClass(CommandPalette, [{
-        key: 'reset',
-        value: function reset() {
-            this.onUpdateSearchTerm();
-            this.props.onRequestClose();
-        }
-    }, {
-        key: 'getFilteredShortcuts',
-        value: function getFilteredShortcuts() {
-            var _this2 = this;
-
-            return this.shortcuts.filter(function (shortcut) {
-                return shortcut.label.toLowerCase().includes(_this2.state.searchTerm.toLowerCase());
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var shortcuts = this.shortcuts.map(function (shortcut) {
+                return {
+                    label: shortcut.label,
+                    value: shortcut.action,
+                    icon: shortcut.icon
+                };
+            });
 
-            var _props = this.props,
-                title = _props.title,
-                isOpen = _props.isOpen,
-                onRequestClose = _props.onRequestClose;
-
-
-            var myButton = function myButton(action, label, key) {
-                return _react2.default.createElement(
-                    _reactUiComponents.Button,
-                    { style: key === 0 ? "brand" : "lighter", onClick: action, key: key },
-                    label
-                );
+            // not exposed internally :(
+            var searchOptions = function searchOptions(searchTerm, processedSelectBoxOptions) {
+                return processedSelectBoxOptions.filter(function (option) {
+                    return option.label && option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+                });
             };
 
-            var children = function children() {
-                var placeholder = 'What do you want to do?';
-
-                return _react2.default.createElement(
-                    'div',
-                    { className: _styles2.default.dialog },
-                    _react2.default.createElement(
-                        'div',
-                        { className: _styles2.default.searchBar },
-                        _react2.default.createElement(_reactUiComponents.TextInput, {
-                            onEnterKey: _this3.onPressEnterKey,
-                            onChange: _this3.onUpdateSearchTerm,
-                            placeholder: placeholder,
-                            setFocus: true
-                        })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: _styles2.default.actions },
-                        _this3.getFilteredShortcuts().map(function (shortcut, index) {
-                            return myButton(shortcut.action, shortcut.label, index, shortcut.customAction);
-                        })
-                    )
-                );
-            };
-
-            var actions = [_react2.default.createElement(
-                _reactUiComponents.Button,
-                { style: 'lighter', onClick: onRequestClose },
-                'Close'
-            )];
-
-            return _react2.default.createElement(_reactUiComponents.Dialog, {
-                title: title,
-                isOpen: isOpen,
-                onRequestClose: onRequestClose,
-                actions: actions,
-                children: children()
+            return _react2.default.createElement(_reactUiComponents.SelectBox, {
+                placeholder: 'What do you want to do?',
+                placeholderIcon: 'filter',
+                onValueChange: this.onValueChange,
+                allowEmpty: true,
+                value: null,
+                options: searchOptions(this.state.searchTerm, shortcuts),
+                displaySearchBox: true,
+                searchTerm: this.state.searchTerm,
+                onSearchTermChange: this.onUpdateSearchTerm,
+                threshold: 0,
+                noMatchesFoundLabel: "No Command found"
             });
         }
     }]);
@@ -2862,24 +2836,10 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
     toggleLeftSideBar: _propTypes2.default.func,
     toggleRightSideBar: _propTypes2.default.func,
     previewUrl: _propTypes2.default.string,
-    searchTerm: _propTypes2.default.string
+    searchTerm: _propTypes2.default.string,
+    close: _propTypes2.default.func.isRequired
 }, _temp)) || _class);
 exports.default = CommandPalette;
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(0);
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().ReactUiComponents;
 
 /***/ }),
 /* 78 */
@@ -2894,7 +2854,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().ReactUiComponents;
 
 /***/ }),
 /* 79 */
@@ -2909,7 +2869,7 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().reactRedux;
 
 /***/ }),
 /* 80 */
@@ -2924,16 +2884,31 @@ var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
+module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().NeosUiReduxStore;
 
 /***/ }),
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _readFromConsumerApi = __webpack_require__(0);
+
+var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(82);
+var content = __webpack_require__(83);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -2941,14 +2916,14 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(84)(content, options);
+var update = __webpack_require__(85)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js??ref--3-2!../../node_modules/postcss-loader/lib/index.js??ref--3-3!./styles.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js??ref--3-2!../../node_modules/postcss-loader/lib/index.js??ref--3-3!./styles.css");
+		module.hot.accept("!!../node_modules/css-loader/index.js??ref--3-2!../node_modules/postcss-loader/lib/index.js??ref--3-3!./styles.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js??ref--3-2!../node_modules/postcss-loader/lib/index.js??ref--3-3!./styles.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -2958,24 +2933,24 @@ if(false) {
 }
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(83)(false);
+exports = module.exports = __webpack_require__(84)(false);
 // imports
 
 
 // module
-exports.push([module.i, ".styles__dialog___pxh-Z {\n    padding: 16px;\n}\n\n.styles__actions___1Xliy > * {\n    display: block !important;\n    margin: .5em auto !important;\n}\n", ""]);
+exports.push([module.i, ".styles__palette___2HEVH {\n    height: 100% !important;\n    z-index: 1000 !important;\n    position: fixed;\n    width: 100%;\n}\n\n.styles__inactive___3rFqu {\n    display: none;\n}\n", ""]);
 
 // exports
 exports.locals = {
-	"dialog": "styles__dialog___pxh-Z",
-	"actions": "styles__actions___1Xliy"
+	"palette": "styles__palette___2HEVH",
+	"inactive": "styles__inactive___3rFqu"
 };
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 /*
@@ -3057,7 +3032,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3113,7 +3088,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(85);
+var	fixUrls = __webpack_require__(86);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -3429,7 +3404,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports) {
 
 
