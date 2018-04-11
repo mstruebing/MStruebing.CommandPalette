@@ -101,8 +101,9 @@ export default class CommandPalette extends PureComponent {
                 displaySearchBox={true}
                 searchTerm={this.state.searchTerm}
                 onSearchTermChange={this.onUpdateSearchTerm}
-                threshold={0}
+                threshold={-1}
                 noMatchesFoundLabel={"No Command found"}
+                setFocus={true}
                 />);
     }
 }

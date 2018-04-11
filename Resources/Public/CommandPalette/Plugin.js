@@ -1220,7 +1220,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
     var _dec, _desc, _value, _class;
 
-    return _dec = (0, _reactKeydown2.default)('ctrl+/'), (_class = function (_PureComponent) {
+    return _dec = (0, _reactKeydown2.default)('ctrl+/', 'esc'), (_class = function (_PureComponent) {
         _inherits(CustomKeyboardListener, _PureComponent);
 
         function CustomKeyboardListener() {
@@ -1262,9 +1262,13 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
         _createClass(CustomKeyboardListener, [{
             key: 'handleKeyPress',
             value: function handleKeyPress(event) {
-                console.log('WHA');
                 if (event.key === '/' && event.ctrlKey) {
                     this.toggle();
+                }
+
+                console.log(event.key);
+                if (event.key === 'Escape') {
+                    this.close();
                 }
             }
         }, {
@@ -2824,8 +2828,9 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
                 displaySearchBox: true,
                 searchTerm: this.state.searchTerm,
                 onSearchTermChange: this.onUpdateSearchTerm,
-                threshold: 0,
-                noMatchesFoundLabel: "No Command found"
+                threshold: -1,
+                noMatchesFoundLabel: "No Command found",
+                setFocus: true
             });
         }
     }]);

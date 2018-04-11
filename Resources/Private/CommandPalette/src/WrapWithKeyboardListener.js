@@ -12,11 +12,15 @@ const wrapWithKeyboardListener = Container => {
             isOpen: false
         };
 
-        @keydown( 'ctrl+/' )
+        @keydown( 'ctrl+/', 'esc' )
         handleKeyPress(event) {
-            console.log( 'WHA' );
             if (event.key === '/'  && event.ctrlKey) {
                 this.toggle();
+            }
+
+            console.log( event.key );
+            if (event.key === 'Escape') {
+                this.close();
             }
         }
 
