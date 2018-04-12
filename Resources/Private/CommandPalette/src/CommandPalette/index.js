@@ -28,7 +28,7 @@ export default class CommandPalette extends PureComponent {
         searchTerm: ''
     };
 
-    shortcuts = [
+    commands = [
         {
             label: "Toggle FullScreen",
             action: this.props.toggleFullScreen
@@ -76,7 +76,7 @@ export default class CommandPalette extends PureComponent {
     }
 
     render() {
-        const shortcuts = this.shortcuts.map(shortcut => ({
+        const commands = this.commands.map(shortcut => ({
             label: shortcut.label,
             value: shortcut.action,
             icon:  shortcut.icon ? shortcut.icon : 'arrow-right'
@@ -93,7 +93,7 @@ export default class CommandPalette extends PureComponent {
                 onValueChange={this.onValueChange}
                 allowEmpty={true}
                 value={null}
-                options={searchOptions(this.state.searchTerm, shortcuts)}
+                options={searchOptions(this.state.searchTerm, commands)}
                 displaySearchBox={true}
                 searchTerm={this.state.searchTerm}
                 onSearchTermChange={this.onUpdateSearchTerm}

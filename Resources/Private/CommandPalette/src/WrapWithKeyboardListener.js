@@ -6,7 +6,7 @@ import mergeClassNames from 'classnames';
 import CommandPalette from './CommandPalette';
 import styles from './styles.css';
 
-const wrapWithKeyboardListener = Container => {
+const wrapWithKeyboardListener = OriginalApp => {
     return class CustomKeyboardListener extends PureComponent {
         state = {
             isOpen: false
@@ -18,7 +18,7 @@ const wrapWithKeyboardListener = Container => {
                 this.toggle();
             }
 
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && this.state.isOpen) {
                 this.close();
             }
         }
@@ -39,7 +39,7 @@ const wrapWithKeyboardListener = Container => {
             return (
                 <React.Fragment>
                     {this.renderPalette()}
-                    <Container {...this.props}/>
+                    <OriginalApp {...this.props}/>
                 </React.Fragment>
             );
         }

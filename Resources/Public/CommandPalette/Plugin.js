@@ -1215,7 +1215,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
     return desc;
 }
 
-var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
+var wrapWithKeyboardListener = function wrapWithKeyboardListener(OriginalApp) {
     var _dec, _desc, _value, _class;
 
     return _dec = (0, _reactKeydown2.default)('ctrl+/', 'esc'), (_class = function (_PureComponent) {
@@ -1269,7 +1269,7 @@ var wrapWithKeyboardListener = function wrapWithKeyboardListener(Container) {
                     _react2.default.Fragment,
                     null,
                     this.renderPalette(),
-                    _react2.default.createElement(Container, this.props)
+                    _react2.default.createElement(OriginalApp, this.props)
                 );
             }
         }]);
@@ -2743,7 +2743,7 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
         _this.state = {
             searchTerm: ''
         };
-        _this.shortcuts = [{
+        _this.commands = [{
             label: "Toggle FullScreen",
             action: _this.props.toggleFullScreen
         }, {
@@ -2790,7 +2790,7 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
     _createClass(CommandPalette, [{
         key: 'render',
         value: function render() {
-            var shortcuts = this.shortcuts.map(function (shortcut) {
+            var commands = this.commands.map(function (shortcut) {
                 return {
                     label: shortcut.label,
                     value: shortcut.action,
@@ -2811,7 +2811,7 @@ var CommandPalette = (_dec = (0, _reactRedux.connect)((0, _plowJs.$transform)({
                 onValueChange: this.onValueChange,
                 allowEmpty: true,
                 value: null,
-                options: searchOptions(this.state.searchTerm, shortcuts),
+                options: searchOptions(this.state.searchTerm, commands),
                 displaySearchBox: true,
                 searchTerm: this.state.searchTerm,
                 onSearchTermChange: this.onUpdateSearchTerm,
